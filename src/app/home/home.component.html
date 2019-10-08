@@ -1,5 +1,7 @@
+<<GridLayout rows="*,*,*,*,*" columns="*" backgroundColor="lightgray">
+    
 
-<GridLayout class="page" columns="*,*,*,*" rows="*,*,*,*">
-<Button *ngFor="let tile of tiles"  (tap)="onTapHandler(tile)"[col]="tile.col" [row]="tile.row" [backgroundColor]="tile.shownColor" [text]="tile.text"></Button>
-    <!-- Add your page content here -->
-</GridLayout>
+
+    <Label row="1" rowSpan="2" text="Ready to chalenge your memory?"></Label>
+    <Button row="2" (tap)="onTap()" text="Play"></Button>
+</GridLayout> 
