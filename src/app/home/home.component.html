@@ -1,0 +1,5 @@
+
+<GridLayout class="page" columns="*,*,*,*" rows="*,*,*,*">
+<Button *ngFor="let tile of tiles"  (tap)="onTapHandler(tile)"[col]="tile.col" [row]="tile.row" [backgroundColor]="tile.shownColor" [text]="tile.text"></Button>
+    <!-- Add your page content here -->
+</GridLayout>
