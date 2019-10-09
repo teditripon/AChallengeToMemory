@@ -6,12 +6,12 @@
     "defaultCollection": "@nativescript/schematics"
   },
   "projects": {
-    "hello-world": {
+    "AChalangeToMemory": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "ns"
+      "prefix": ""
     }
   },
-  "defaultProject": "hello-world"
+  "defaultProject": "AChalangeToMemory"
 }

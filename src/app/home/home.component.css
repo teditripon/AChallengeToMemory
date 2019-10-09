@@ -1,0 +1,14 @@
+Label{
+    text-align: center;
+    font-size: 20px;
+    margin: 0 5%;
+    overflow: visible;
+    word-wrap: break-word;
+    color:blueviolet;
+    
+}
+Button{
+    margin: 0 20%;
+    background-color: blueviolet;
+    color:yellowgreen;
+}
