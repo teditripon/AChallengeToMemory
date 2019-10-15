@@ -1,6 +1,6 @@
 {
   "nativescript": {
-    "id": "org.nativescript.AChalangeToMemory",
+    "id": "org.nativescript.AChallengeToMemory",
     "tns-android": {
       "version": "6.1.2"
     },

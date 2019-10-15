@@ -1,8 +1,9 @@
 
 
-<GridLayout class="page" columns="*,*" rows="*,*,*">
-<Label row="0" text="Chose a game mode" textWrap="true"></Label>
+<GridLayout class="page" columns="*,*" rows="*,*">
 
-<Button *ngFor="let option of gameOptions" col="0" row="1" (tap)="onTapHandler(option)" [text]="option.name"></Button>
+<Button *ngFor="let option of gameOptions, index as i" 
+[row]="getFloor(i/2)" [col]="i%2"
+ (tap)="onTapHandler(option)" [text]="option.name"></Button>
     <!-- Add your page content here -->
 </GridLayout>

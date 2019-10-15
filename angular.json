@@ -6,12 +6,12 @@
     "defaultCollection": "@nativescript/schematics"
   },
   "projects": {
-    "AChalangeToMemory": {
+    "AChallengeToMemory": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": ""
     }
   },
-  "defaultProject": "AChalangeToMemory"
+  "defaultProject": "AChallengeToMemory"
 }
