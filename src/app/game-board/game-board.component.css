@@ -1,1 +1,6 @@
 /* Add mobile styles for the component here.  */
+.card-button{
+    font-size: 40px;
+    margin: 5px;
+    border-radius: 5%;
+}
