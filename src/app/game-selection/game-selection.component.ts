@@ -13,9 +13,9 @@ export class GameSelectionComponent implements OnInit {
         console.log("ingame selecion");
         this.gameOptions = [
             { name: "4 x 4", col: 4, row: 4 },
-            { name: "5 x 5", col: 6, row: 5 },
-            { name: "7 x 6", col: 6, row: 5 },
-            { name: "9 x 7", col: 9, row: 7 }];
+            { name: "5 x 5", col: 5, row: 5 },
+            { name: "7 x 6", col: 7, row: 6 },
+            { name: "9 x 7", col: 9, row: 8 }];
     }
 
 

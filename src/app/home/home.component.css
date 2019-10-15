@@ -9,6 +9,6 @@ Label{
 }
 Button{
     margin: 0 20%;
-    background-color: blueviolet;
-    color:yellowgreen;
+    background-color: yellowgreen;
+    color:blueviolet;
 }
