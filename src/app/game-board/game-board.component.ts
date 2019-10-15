@@ -136,4 +136,5 @@ export class GameBoardComponent implements OnInit {
             }
         }
     }
+    
 }

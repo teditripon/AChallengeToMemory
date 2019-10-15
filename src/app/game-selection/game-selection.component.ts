@@ -18,9 +18,6 @@ export class GameSelectionComponent implements OnInit {
             { name: "9 x 7", col: 9, row: 8 }];
     }
 
-
-
-
     onTapHandler(option) {
         this.router.navigate(["board"], { queryParams: option });
     }
