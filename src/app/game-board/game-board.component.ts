@@ -11,6 +11,10 @@ const BACKGROUND_IMAGE = "linear-gradient(45deg, blue,red,aqua,yellow,violet,gre
     styleUrls: ["./game-board.component.css"]
 })
 export class GameBoardComponent implements OnInit {
+
+    public pairFlipsCounter = 0;
+    public matchedCounter = 0;
+
     public preventTap = false;
     public tiles = [];
 
@@ -29,7 +33,6 @@ export class GameBoardComponent implements OnInit {
         okButtonText: "New Game",
         cancelable: false
     };
-    private colors = [];
 
     constructor(private route: ActivatedRoute) {
         this.route.queryParams.subscribe(params => {
@@ -44,7 +47,7 @@ export class GameBoardComponent implements OnInit {
     ngOnInit(): void {
         this.createTiles();
     }
-    private getFloor(number) {
+    public getFloor(number) {
         return Math.floor(number);
     }
 
@@ -61,27 +64,35 @@ export class GameBoardComponent implements OnInit {
         let colorSets = [];
         let colors = [];
         let colorDistance = Math.floor(16777215 / (numberOfColors / numberOfMatches));
-        for (let index = 1; index <= numberOfColors / numberOfMatches; index++) {
-            const color = "#" + (index * colorDistance).toString(16);
-            colors.push(color)
+        for (let index = 0; index < (numberOfColors / numberOfMatches); index++) {
+            const color = "#" + ((index + 1) * colorDistance).toString(16);
+            colors.push(color);
         }
-
         for (let index = 0; index < numberOfMatches; index++) {
-            colorSets = colorSets.concat(colors)
+            colorSets.push(...colors);
         }
         return colorSets;
     }
 
     private createTiles() {
+        let currentRow = 0;
         let colorsArr = this.generateColorsArray(this.numberOfCardsInDeck, 2);
+
         let tiles = [];
         tiles = this.shuffleArray(colorsArr).map((color, index) => {
             let tile = {
                 shownColor: BACKGROUND_COLOR,
                 backgroundImage: BACKGROUND_IMAGE,
                 color: color,
+                hidden: false,
                 index: index,
+                row: currentRow,// this.getFloor(index % this.numberOfRows),
+                col: (index % this.numberOfColumns)
             };
+            //
+            if (index % this.numberOfColumns === this.numberOfColumns - 1) {
+                currentRow++;
+            }
             return tile;
         });
         this.tiles = tiles;
@@ -106,18 +117,21 @@ export class GameBoardComponent implements OnInit {
             tile.shownColor = tile.color;
             tile.backgroundImage = '';
             if (this.selectedTile) {
+                this.pairFlipsCounter++;
                 this.preventTap = true;
                 setTimeout(() => {
                     if (
                         this.selectedTile.color === tile.color &&
                         this.selectedTile.index !== tile.index
                     ) {
-                        this.tiles = this.tiles.filter(
-                            elem => elem.color !== tile.color
-                        );
+
+                        this.selectedTile.hidden = true;
+                        tile.hidden = true;
+
+                        this.matchedCounter++;
                         this.preventTap = false;
                         this.selectedTile = undefined;
-                        if (this.tiles.length === 0) {
+                        if (this.matchedCounter * 2 === this.numberOfCardsInDeck) {
                             alert(this.alertOptions).then(() => {
                                 this.createTiles();
                             });
@@ -136,5 +150,5 @@ export class GameBoardComponent implements OnInit {
             }
         }
     }
-    
+
 }
