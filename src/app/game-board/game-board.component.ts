@@ -14,8 +14,13 @@ export class GameBoardComponent implements OnInit {
     public preventTap = false;
     public tiles = [];
 
-    public rows: number;
-    public cols: number;
+    public numberOfRows: number;
+    public numberOfColumns: number;
+
+    public rowsTemplate: string = "";
+    public columnsTemplate: string = ""
+
+    private numberOfCardsInDeck = 0;
 
     private selectedTile;
     private alertOptions = {
@@ -24,53 +29,66 @@ export class GameBoardComponent implements OnInit {
         okButtonText: "New Game",
         cancelable: false
     };
-    private colors = ["black", "blue", "brown", "gray", "green", "purple", "red", "yellow", "black",
-        "blue", "brown", "gray", "green", "purple", "red", "yellow"];
+    private colors = [];
 
     constructor(private route: ActivatedRoute) {
         this.route.queryParams.subscribe(params => {
-            this.cols = params['col'];
-            this.rows = params['row'];
+            this.numberOfColumns = params['col'];
+            this.numberOfRows = params['row'];
+            this.numberOfCardsInDeck = this.numberOfColumns * this.numberOfRows;
+            this.columnsTemplate = this.greateStarsString(this.numberOfColumns);
+            this.rowsTemplate = this.greateStarsString(this.numberOfRows);
         });
     }   // Use the component constructor to inject providers.
 
     ngOnInit(): void {
-        console.log(this.cols, this.rows);
         this.createTiles();
     }
-    getFloor(number) {
+    private getFloor(number) {
         return Math.floor(number);
     }
-    
+
+    private greateStarsString(starCount): string {
+        let starString = ""
+        for (let index = 0; index < starCount; index++) {
+            starString += "*";
+            if (index < starCount - 1) { starString += ", "; };
+        }
+        return starString;
+    }
+
+    private generateColorsArray(numberOfColors, numberOfMatches) {
+        let colorSets = [];
+        let colors = [];
+        let colorDistance = Math.floor(16777215 / (numberOfColors / numberOfMatches));
+        for (let index = 1; index <= numberOfColors / numberOfMatches; index++) {
+            const color = "#" + (index * colorDistance).toString(16);
+            colors.push(color)
+        }
+
+        for (let index = 0; index < numberOfMatches; index++) {
+            colorSets = colorSets.concat(colors)
+        }
+        return colorSets;
+    }
 
     private createTiles() {
-        let colorsArr = [...this.colors];
+        let colorsArr = this.generateColorsArray(this.numberOfCardsInDeck, 2);
         let tiles = [];
-        let colCount = 0;
-        let rowCount = 0;
         tiles = this.shuffleArray(colorsArr).map((color, index) => {
             let tile = {
                 shownColor: BACKGROUND_COLOR,
                 backgroundImage: BACKGROUND_IMAGE,
                 color: color,
-                col: colCount,
-                row: rowCount,
                 index: index,
-                text: "?"
             };
-            rowCount++;
-
-            if (rowCount === 4) {
-                colCount++;
-                rowCount = 0;
-            }
             return tile;
         });
         this.tiles = tiles;
     }
 
     private shuffleArray(cards: any[]): any[] {
-        // might want to make this imutable
+        // ight want to make this imutable
         for (let index = 0; index < cards.length; index++) {
             let randomIndex = this.getRandomInt(cards.length - 2);
             let replacedElementArray = cards.splice(randomIndex, 1);
@@ -79,14 +97,14 @@ export class GameBoardComponent implements OnInit {
         return cards;
     }
     private getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
+        let maximum = max ? max : 1;
+        return Math.floor(Math.random() * Math.floor(maximum));
     }
 
     onTapHandler(tile) {
         if (!this.preventTap) {
             tile.shownColor = tile.color;
             tile.backgroundImage = '';
-            tile.text = "";
             if (this.selectedTile) {
                 this.preventTap = true;
                 setTimeout(() => {
@@ -107,11 +125,9 @@ export class GameBoardComponent implements OnInit {
                     } else {
                         this.selectedTile.shownColor = BACKGROUND_COLOR;
                         this.selectedTile.backgroundImage = BACKGROUND_IMAGE
-                        this.selectedTile.text = "?";
                         this.selectedTile = undefined;
                         tile.shownColor = BACKGROUND_COLOR;
                         tile.backgroundImage = BACKGROUND_IMAGE;
-                        tile.text = "?";
                         this.preventTap = false;
                     }
                 }, 500);
@@ -120,4 +136,5 @@ export class GameBoardComponent implements OnInit {
             }
         }
     }
+    
 }

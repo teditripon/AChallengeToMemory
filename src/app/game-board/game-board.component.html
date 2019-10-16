@@ -1,12 +1,12 @@
-<GridLayout class="page" columns="*,*,*,*" rows="*,*,*,*">
+<GridLayout class="page" [columns]="columnsTemplate" [rows]="rowsTemplate">
   <Button class="card-button"
-    *ngFor="let tile of tiles"
+    *ngFor="let tile of tiles, index as i"
     (tap)="onTapHandler(tile)"
-    [col]="tile.col"
-    [row]="tile.row"
+
+    [row]="getFloor(i/numberOfRows)" [col]="i%numberOfColumns"
+
     [backgroundColor]="tile.shownColor"
     [backgroundImage]="tile.backgroundImage"
-    [text]="tile.text"
   ></Button>
   <!-- Add your page content here -->
 </GridLayout>
