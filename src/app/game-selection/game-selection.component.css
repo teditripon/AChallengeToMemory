@@ -4,3 +4,11 @@
     grid-gap: 10px;
 
 }
+
+.page-flex{
+
+  flex-direction: row;
+  justify-items: center;
+  justify-content: space-around;
+  align-content: space-between;
+}
