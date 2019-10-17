@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+
 @Component({
     selector: "Home",
     templateUrl: "./home.component.html",
@@ -8,8 +9,7 @@ import { Router } from "@angular/router";
 })
 export class HomeComponent {
     public constructor(private router: Router) { }
-
-    onTap(){
+    onTap() {
         this.router.navigate(["selection"]);
     }
 }

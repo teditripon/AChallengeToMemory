@@ -12,4 +12,9 @@ Button{
     margin: 0 20%;
     background-color: yellowgreen;
     color:blueviolet;
+    letter-spacing: 0.25px;
+    font-size:30px;
+    font-weight: 700;
+    border-radius: 10px;
+    
 }

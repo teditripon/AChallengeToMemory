@@ -6,6 +6,7 @@ import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
 import { GameSelectionComponent } from './game-selection/game-selection.component';
 import { GameBoardComponent } from './game-board/game-board.component';
+import { HideActionBarDirective } from './hide-action-bar.directive'
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -19,13 +20,14 @@ import { GameBoardComponent } from './game-board/game-board.component';
     ],
     imports: [
         NativeScriptModule,
-        AppRoutingModule
+        AppRoutingModule,
     ],
     declarations: [
         AppComponent,
         HomeComponent,
         GameSelectionComponent,
-        GameBoardComponent
+        GameBoardComponent,
+        HideActionBarDirective,
     ],
     providers: [],
     schemas: [

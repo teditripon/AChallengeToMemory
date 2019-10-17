@@ -1,14 +1,20 @@
 /* Add mobile styles for the component here.  */
 .page{
-
-    grid-gap: 10px;
-
+  grid-gap: 10px;
+  padding: 20px;  
 }
 
-.page-flex{
 
+.page-flex{
   flex-direction: row;
   justify-items: center;
   justify-content: space-around;
   align-content: space-between;
+}
+
+.grid-option{
+font-size:35px;
+background-color: yellowgreen;
+color:blueviolet;
+font-weight: 700;
 }

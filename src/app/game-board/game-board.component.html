@@ -1,4 +1,6 @@
-<GridLayout class="page" [columns]="columnsTemplate" [rows]="rowsTemplate">
+<GridLayout class="page" [columns]="columnsTemplate" [rows]="rowsTemplate"
+ backgroundColor="BurlyWood" hideActionBar>
+ 
   <Button class="card-button"
     *ngFor="let tile of tiles"
     (tap)="onTapHandler(tile)"
@@ -6,6 +8,9 @@
     [col]="tile.col"
     visibility="{{ tile.hidden ? 'hidden' : 'visible' }}"
     [backgroundColor]="tile.shownColor"
-    [backgroundImage]="tile.backgroundImage"></Button>
-    
+    [backgroundImage]="tile.backgroundImage"
+    [disabled]="tile.noTap">
+  </Button>
+
+
 </GridLayout>
