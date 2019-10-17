@@ -1,9 +1,15 @@
-import { Component, OnInit, ɵangular_packages_core_core_o } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { alert } from "tns-core-modules/ui/dialogs";
 import { ActivatedRoute } from "@angular/router";
 
-const BACKGROUND_COLOR = "white";
+
+const BACKGROUND_COLOR = "BurlyWood";
 const BACKGROUND_IMAGE = "linear-gradient(45deg, blue,red,aqua,yellow,violet,green)";
+const COLOR_NAMES = [
+    'Black', 'Navy', 'Green','Purple', 'Teal', 'DeepSkyBlue', 'MediumSpringGreen', 'DodgerBlue', 'ForestGreen', 'DarkSlateGray ',
+    'DarkSlateBlue', 'Indigo', 'DarkOliveGreen', 'SlateBlue', 'LawnGreen','Blue', 'Maroon', 'YellowGreen', 'Brown', 'IndianRed',
+    'Chocolate', 'LightGrey', 'GoldenRod', 'RoyalBlue', 'LightCyan', 'OldLace', 'Red', 'DarkCyan ', 'Fuchsia', 'Pink', 'Gold',
+    'Turquoise', 'Yellow', 'MintCream', 'FireBrick', 'CornflowerBlue'];
 
 @Component({
     selector: "game-board",
@@ -11,7 +17,6 @@ const BACKGROUND_IMAGE = "linear-gradient(45deg, blue,red,aqua,yellow,violet,gre
     styleUrls: ["./game-board.component.css"]
 })
 export class GameBoardComponent implements OnInit {
-
     public pairFlipsCounter = 0;
     public matchedCounter = 0;
 
@@ -60,20 +65,6 @@ export class GameBoardComponent implements OnInit {
         return starString;
     }
 
-    private generateColorsArray(numberOfColors, numberOfMatches) {
-        let colorSets = [];
-        let colors = [];
-        let colorDistance = Math.floor(16777215 / (numberOfColors / numberOfMatches));
-        for (let index = 0; index < (numberOfColors / numberOfMatches); index++) {
-            const color = "#" + ((index + 1) * colorDistance).toString(16);
-            colors.push(color);
-        }
-        for (let index = 0; index < numberOfMatches; index++) {
-            colorSets.push(...colors);
-        }
-        return colorSets;
-    }
-
     private createTiles() {
         let currentRow = 0;
         let colorsArr = this.generateColorsArray(this.numberOfCardsInDeck, 2);
@@ -85,6 +76,7 @@ export class GameBoardComponent implements OnInit {
                 backgroundImage: BACKGROUND_IMAGE,
                 color: color,
                 hidden: false,
+                noTap: false,
                 index: index,
                 row: currentRow,// this.getFloor(index % this.numberOfRows),
                 col: (index % this.numberOfColumns)
@@ -98,25 +90,13 @@ export class GameBoardComponent implements OnInit {
         this.tiles = tiles;
     }
 
-    private shuffleArray(cards: any[]): any[] {
-        // ight want to make this imutable
-        for (let index = 0; index < cards.length; index++) {
-            let randomIndex = this.getRandomInt(cards.length - 2);
-            let replacedElementArray = cards.splice(randomIndex, 1);
-            cards = cards.concat(replacedElementArray);
-        }
-        return cards;
-    }
-    private getRandomInt(max) {
-        let maximum = max ? max : 1;
-        return Math.floor(Math.random() * Math.floor(maximum));
-    }
-
     onTapHandler(tile) {
-        if (!this.preventTap) {
+        if (!this.preventTap ) {
             tile.shownColor = tile.color;
             tile.backgroundImage = '';
             if (this.selectedTile) {
+
+                if (this.selectedTile.index === tile.index) return; // taped same card again
                 this.pairFlipsCounter++;
                 this.preventTap = true;
                 setTimeout(() => {
@@ -146,9 +126,37 @@ export class GameBoardComponent implements OnInit {
                     }
                 }, 500);
             } else {
+                tile.noTap = true;
                 this.selectedTile = tile;
             }
         }
     }
 
+    private shuffleArray(cards: any[]): any[] {
+        // ight want to make this imutable
+        for (let index = 0; index < cards.length; index++) {
+            let randomIndex = this.getRandomInt(cards.length - 2);
+            let replacedElementArray = cards.splice(randomIndex, 1);
+            cards = cards.concat(replacedElementArray);
+        }
+        return cards;
+    }
+    private getRandomInt(max) {
+        let maximum = max ? max : 1;
+        return Math.floor(Math.random() * Math.floor(maximum));
+    }
+
+    private generateColorsArray(numberOfCards, numberOfMatches) {
+        let colorSets = [];
+        let colors = [];
+        let colorsLength = COLOR_NAMES.length;
+        for (let index = 0; index < (numberOfCards / (numberOfMatches * 2)); index++) {
+            colors.push(COLOR_NAMES[index]);
+            colors.push(COLOR_NAMES[colorsLength - index]);
+        }
+        for (let index = 0; index < numberOfMatches; index++) {
+            colorSets.push(...colors);
+        }
+        return colorSets;
+    }
 }
