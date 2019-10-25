@@ -1,4 +1,11 @@
 /* Add mobile styles for the component here.  */
+
+.score-bar{
+    padding:5% 10%;
+    font-size: 20px;
+    color: #fff444
+}
+
 .card-button{
     color:black;
     font-size: 40px;
